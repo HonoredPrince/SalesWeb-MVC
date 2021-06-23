@@ -7,16 +7,20 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
+using SalesWebMVC.Models.ViewModels;
+using SalesWebMVC.Services;
 
 namespace SalesWebMVC.Controllers
 {
     public class DepartamentsController : Controller
     {
         private readonly SalesWebMVCContext _context;
+        private readonly DepartamentService _departamentService;
 
-        public DepartamentsController(SalesWebMVCContext context)
+        public DepartamentsController(SalesWebMVCContext context, DepartamentService departamentService)
         {
             _context = context;
+            _departamentService = departamentService;
         }
 
         // GET: Departaments
@@ -40,7 +44,9 @@ namespace SalesWebMVC.Controllers
                 return NotFound();
             }
 
-            return View(departament);
+            var sellers = await _departamentService.FindAllSellersInDepartamentAsync(id.Value);
+            var departamentViewModel = new DepartamentDetailsViewModel { Departament = departament, Sellers = sellers };
+            return View(departamentViewModel);
         }
 
         // GET: Departaments/Create

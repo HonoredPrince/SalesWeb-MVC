@@ -1,25 +1,33 @@
-﻿@model SalesWebMVC.Models.Departament
+﻿@model SalesWebMVC.Models.ViewModels.DepartamentDetailsViewModel
 
 @{
     ViewData["Title"] = "Details";
 }
 
-@{ var sellerList = Model.Sellers;} 
-
 <h2>Details</h2>
 
 <div>
     <hr />
-    <h4>Departament</h4>
+    <h4>@Html.DisplayFor(model => model.Departament.Name) Departament</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt style="text-align: left;">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd style="text-align: left;">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+    <h4>Sellers in this Departament</h4>
+    @foreach (Seller seller in Model.Sellers)
+    {
+        <dl class="dl-horizontal">
+            <dt style="text-align: left;">
+                @Html.DisplayNameFor(obj => seller.Name)
+            </dt>
+            <dd style="text-align: left;">
+                @Html.DisplayFor(obj => seller.Name)
+            </dd>
+            <dt style="text-align: left;">
+                @Html.DisplayNameFor(obj => seller.Email)
+            </dt>
+            <dd style="text-align: left;">
+                @Html.DisplayFor(obj => seller.Email)
+            </dd>
+        </dl>
+    }
 </div>
 
 <div>
