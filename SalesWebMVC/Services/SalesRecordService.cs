@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SalesWebMVC.Data;
 using SalesWebMVC.Models;
+using SalesWebMVC.Services.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,6 +53,26 @@ namespace SalesWebMVC.Services
                 .OrderByDescending(x => x.Date)
                 .GroupBy(x => x.Seller.Departament)
                 .ToListAsync();
+        }
+
+        public async Task InsertAsync(SalesRecord saleRecord)
+        {
+            _context.Add(saleRecord);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task RemoveAsync(int id)
+        {
+            try
+            {
+                var saleRecordToRemove = await _context.SalesRecord.FindAsync(id);
+                _context.SalesRecord.Remove(saleRecordToRemove);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException e)
+            {
+                throw new IntegrityException(e.Message);
+            }
         }
     }
 }

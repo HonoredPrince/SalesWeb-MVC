@@ -1,0 +1,51 @@
+﻿@using SalesWebMVC.Models.Enums
+
+@model SalesWebMVC.Models.ViewModels.SaleRecordFormViewModel;
+
+@{
+
+    ViewData["Title"] = "Create";
+    List<String> salesStatusTypes = new List<String> { "0 - Pending", "1 - Billed", "2 - Canceled " };
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<h4>Sale Record</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div class="form-group">
+                <label asp-for="SaleRecord.Date" class="control-label"></label>
+                <input asp-for="SaleRecord.Date" class="form-control" />
+                <span asp-validation-for="SaleRecord.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SaleRecord.Amount" class="control-label"></label>
+                <input asp-for="SaleRecord.Amount" class="form-control" />
+                <span asp-validation-for="SaleRecord.Amount" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SaleRecord.Status" class="control-label"></label>
+                <input asp-for="SaleRecord.Status" class="form-control" />
+                <span asp-validation-for="SaleRecord.Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SaleRecord.SellerId" class="control-label"></label>
+                <select asp-for="SaleRecord.SellerId" asp-items="@(new SelectList(Model.Sellers, "Id", "Name"))" class="form-control"></select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
