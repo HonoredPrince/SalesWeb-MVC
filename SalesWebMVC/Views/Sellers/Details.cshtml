@@ -11,41 +11,44 @@
     <h4>Seller</h4>
     <hr />
     <dl class="dl-horizontal">
-        <dt>
+        <dt style="text-align: left;">
             @Html.DisplayNameFor(model => model.Name)
         </dt>
-        <dd>
+        <dd style="text-align: left;">
             @Html.DisplayFor(model => model.Name)
         </dd>
-        <dt>
+        <dt style="text-align: left;">
             @Html.DisplayNameFor(model => model.Email)
         </dt>
-        <dd>
+        <dd style="text-align: left;">
             @Html.DisplayFor(model => model.Email)
         </dd>
-        <dt>
+        <dt style="text-align: left;">
             @Html.DisplayNameFor(model => model.BirthDate)
         </dt>
-        <dd>
+        <dd style="text-align: left;">
             @Html.DisplayFor(model => model.BirthDate)
         </dd>
-        <dt>
+        <dt style="text-align: left;">
             @Html.DisplayNameFor(model => model.BaseSalary)
         </dt>
-        <dd>
+        <dd style="text-align: left;">
             @Html.DisplayFor(model => model.BaseSalary)
         </dd>
-        <dt>
+        <dt style="text-align: left;">
             @Html.DisplayNameFor(model => model.Departament)
         </dt>
-        <dd>
+        <dd style="text-align: left;">
             @Html.DisplayFor(model => model.Departament.Name)
         </dd>
     </dl>
 
     <form asp-action="Details">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Edit" class="btn btn-default" /> |
-        <a asp-action="Index">Back to List</a>
     </form>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
