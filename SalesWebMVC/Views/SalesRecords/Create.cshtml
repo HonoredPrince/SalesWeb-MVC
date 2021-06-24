@@ -27,12 +27,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="SaleRecord.Status" class="control-label"></label>
-                <input asp-for="SaleRecord.Status" class="form-control" />
+                <select asp-for="SaleRecord.Status" asp-items="Html.GetEnumSelectList<SalesStatus>()" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
                 <span asp-validation-for="SaleRecord.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleRecord.SellerId" class="control-label"></label>
-                <select asp-for="SaleRecord.SellerId" asp-items="@(new SelectList(Model.Sellers, "Id", "Name"))" class="form-control"></select>
+                <label asp-for="SaleRecord.SellerId" class="control-label">Seller Name</label>
+                <select asp-for="SaleRecord.SellerId" asp-items="@(new SelectList(Model.Sellers, "Id", "Name"))" class="form-control">
+                    <option selected="selected" value=""></option>
+                </select>
+                <span asp-validation-for="SaleRecord.SellerId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-default" />
