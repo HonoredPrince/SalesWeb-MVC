@@ -36,6 +36,11 @@ namespace SalesWebMVC.Services
                 .ToListAsync();
         }
 
+        public async Task<SalesRecord> FindByIdAsync(int id)
+        {
+            return await _context.SalesRecord.Include(obj => obj.Seller).FirstOrDefaultAsync(sale => sale.Id == id);
+        }
+
         public async Task<List<IGrouping<Departament,SalesRecord>>> FindByDateGroupingAsync(DateTime? minDate, DateTime? maxDate)
         {
             var result = from obj in _context.SalesRecord select obj;
