@@ -79,5 +79,23 @@ namespace SalesWebMVC.Services
                 throw new IntegrityException(e.Message);
             }
         }
+
+        public async Task UpdateAsync(SalesRecord saleRecord)
+        {
+            bool hasAny = await _context.SalesRecord.AnyAsync(x => x.Id == saleRecord.Id);
+            if (!hasAny)
+            {
+                throw new NotFoundException("Id not found");
+            }
+            try
+            {
+                _context.Update(saleRecord);
+                await _context.SaveChangesAsync();
+            }
+            catch (DbConcurrencyException e)
+            {
+                throw new DbConcurrencyException(e.Message);
+            }
+        }
     }
 }

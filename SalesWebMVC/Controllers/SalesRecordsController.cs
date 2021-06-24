@@ -112,6 +112,54 @@ namespace SalesWebMVC.Controllers
             }
         }
 
+
+        public async Task<IActionResult> Edit(int? id)
+        {
+            if (id == null)
+            {
+                RedirectToAction(nameof(Error), new { message = "Id not provided" });
+            }
+
+            var obj = await _salesRecordService.FindByIdAsync(id.Value);
+            if (obj == null)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id not found" });
+            }
+
+            var sellers = await _sellerService.FindAllAsync();
+            var viewModel = new SaleRecordFormViewModel { SaleRecord = obj, Sellers = sellers};
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, SalesRecord saleRecord)
+        {
+            if (!ModelState.IsValid)
+            {
+                var sellerList = await _sellerService.FindAllAsync();
+                var viewModel = new SaleRecordFormViewModel { Sellers = sellerList };
+                return View(viewModel);
+            }
+            if (id != saleRecord.Id)
+            {
+                return RedirectToAction(nameof(Error), new { message = "Id mismatch" });
+            }
+            try
+            {
+                await _salesRecordService.UpdateAsync(saleRecord);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (NotFoundException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
+            catch (DbConcurrencyException e)
+            {
+                return RedirectToAction(nameof(Error), new { message = e.Message });
+            }
+        }
+
         public IActionResult Error(string message)
         {
             var viewModel = new ErrorViewModel
